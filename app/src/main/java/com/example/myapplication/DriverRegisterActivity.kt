@@ -25,8 +25,10 @@ class DriverRegisterActivity : AppCompatActivity() {
 
     private lateinit var etUsername: EditText
     private lateinit var etEmail: EditText
-    private lateinit var etPassword: EditText
-    private lateinit var etConfirmPassword: EditText
+    private lateinit var etPassword: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etConfirmPassword: com.google.android.material.textfield.TextInputEditText
+    private lateinit var tilPassword: com.google.android.material.textfield.TextInputLayout
+    private lateinit var tilConfirmPassword: com.google.android.material.textfield.TextInputLayout
     private lateinit var etFullName: EditText
     private lateinit var etLicenseNumber: EditText
     private lateinit var etContactNumber: EditText
@@ -62,6 +64,8 @@ class DriverRegisterActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_email)
         etPassword = findViewById(R.id.et_password)
         etConfirmPassword = findViewById(R.id.et_confirm_password)
+        tilPassword = findViewById(R.id.til_password)
+        tilConfirmPassword = findViewById(R.id.til_confirm_password)
         etFullName = findViewById(R.id.et_full_name)
         etLicenseNumber = findViewById(R.id.et_license_number)
         etContactNumber = findViewById(R.id.et_contact_number)
@@ -92,7 +96,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                 checkEmailInDb(etEmail.text.toString()) { exists ->
                     if (exists) {
                         etEmail.error = "Email is already registered"
-                        CustomNotification.showTopNotification(this, "Email is already registered")
                         updateFieldState(etPassword, false)
                     } else {
                         etEmail.error = null
@@ -110,23 +113,37 @@ class DriverRegisterActivity : AppCompatActivity() {
         val passPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$".toRegex()
         etPassword.addValidationWatcher(
             validator = { it.matches(passPattern) },
-            errorMsg = "Password must be 8+ chars with Upper, Lower, Number, and Symbol",
+            errorMsg = "Password must be at least 8 characters with upper, lower, number, and symbol",
             onValid = { 
-                if (etConfirmPassword.text.isNotEmpty()) {
+                tilPassword.error = null
+                if (etConfirmPassword.text?.isNotEmpty() == true) {
                     validateConfirmPassword()
                 } else {
                     updateFieldState(etConfirmPassword, true) 
                 }
             },
-            onInvalid = { updateFieldState(etConfirmPassword, false) }
+            onInvalid = { 
+                if (etPassword.text?.isNotEmpty() == true) {
+                    tilPassword.error = "Password must be at least 8 characters with upper, lower, number, and symbol"
+                }
+                updateFieldState(etConfirmPassword, false) 
+            }
         )
 
         // 4. Confirm Password
         etConfirmPassword.addValidationWatcher(
             validator = { it == etPassword.text.toString() && it.isNotEmpty() },
             errorMsg = "Passwords do not match",
-            onValid = { updateFieldState(etFullName, true) },
-            onInvalid = { updateFieldState(etFullName, false) }
+            onValid = { 
+                tilConfirmPassword.error = null
+                updateFieldState(etFullName, true) 
+            },
+            onInvalid = { 
+                if (etConfirmPassword.text?.isNotEmpty() == true) {
+                    tilConfirmPassword.error = "Passwords do not match"
+                }
+                updateFieldState(etFullName, false) 
+            }
         )
 
         // 5. Full Name
@@ -145,7 +162,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                 checkLicenseInDb(etLicenseNumber.text.toString()) { exists ->
                     if (exists) {
                         etLicenseNumber.error = "License number already exists"
-                        CustomNotification.showTopNotification(this, "License number already exists")
                         updateFieldState(etContactNumber, false)
                     } else {
                         etLicenseNumber.error = null
@@ -167,7 +183,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                 checkPhoneInDb(etContactNumber.text.toString()) { exists ->
                     if (exists) {
                         etContactNumber.error = "Contact number already exists"
-                        CustomNotification.showTopNotification(this, "Contact number already exists")
                         updateFieldState(etTruckAssignment, false)
                     } else {
                         etContactNumber.error = null
@@ -191,7 +206,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                     checkTruckInDb(truckId) { exists ->
                         if (exists) {
                             etTruckAssignment.error = "Truck ID already assigned or exists"
-                            CustomNotification.showTopNotification(this, "Truck ID already assigned")
                             updateFieldState(btnSubmit, false)
                         } else {
                             etTruckAssignment.error = null
@@ -223,10 +237,10 @@ class DriverRegisterActivity : AppCompatActivity() {
 
     private fun validateConfirmPassword() {
         if (etConfirmPassword.text.toString() == etPassword.text.toString()) {
-            etConfirmPassword.error = null
+            tilConfirmPassword.error = null
             updateFieldState(etFullName, true)
         } else {
-            etConfirmPassword.error = "Passwords do not match"
+            tilConfirmPassword.error = "Passwords do not match"
             updateFieldState(etFullName, false)
         }
     }
@@ -315,7 +329,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                     if (input.isNotEmpty()) {
                         validationRunnable = Runnable { 
                             this@addValidationWatcher.error = errorMsg
-                            CustomNotification.showTopNotification(this@DriverRegisterActivity, errorMsg)
                         }
                         handler.postDelayed(validationRunnable!!, 2000)
                     }

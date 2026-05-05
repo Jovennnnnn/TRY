@@ -37,4 +37,5 @@
     <color name="notes_bg">#E3F2FD</color>
     <color name="notes_text">#0D47A1</color>
     <color name="cancel_bg">#EEEEEE</color>
+    <color name="dirty_white">#F5F5F5</color>
 </resources>

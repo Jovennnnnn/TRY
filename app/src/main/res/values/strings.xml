@@ -75,7 +75,7 @@
     <string name="routes_completed">Routes Completed</string>
     <string name="distance_covered">Distance Covered</string>
     <string name="complaints_resolved">Complaints Resolved</string>
-    <string name="sms_notifications">SMS Notifications</string>
+    <string name="sms_notifications">App Notifications</string>
     <string name="system_efficiency">System Efficiency</string>
     <string name="active_personnel">Active Personnel</string>
     <string name="default_routes_value">5 / 8</string>
@@ -100,4 +100,8 @@
     <string name="management_actions">Management Actions</string>
     <string name="system_performance">System Performance</string>
     <string name="analytics_and_reports">Analytics &amp; Reports</string>
+    <string name="search_residents">Search residents&#8230;</string>
+    <string name="search_drivers">Search drivers&#8230;</string>
+    <string name="search_requests">Search requests&#8230;</string>
+    <string name="search">Search&#8230;</string>
 </resources>

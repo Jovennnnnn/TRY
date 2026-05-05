@@ -74,8 +74,9 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="8dp">
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,13 +84,25 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Driver Credentials"
-                        android:textColor="@color/driver_icon"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@android:drawable/ic_lock_idle_lock"
+                            app:tint="@color/driver_icon" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Driver Credentials"
+                            android:textColor="@color/driver_icon"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <!-- Username -->
                     <TextView
@@ -106,10 +119,9 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
-                        android:drawableStart="@null"
-                        android:drawableLeft="@null"
                         android:hint="Choose a username"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:inputType="textNoSuggestions"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
@@ -130,58 +142,87 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
                         android:hint="your@email.com"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:inputType="textEmailAddress"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
 
                     <!-- Password -->
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_password"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Password"
-                        android:textColor="#333333"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <EditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
-                        android:drawableStart="@null"
-                        android:drawableLeft="@null"
-                        android:hint="Secure password"
-                        android:inputType="textPassword"
-                        android:importantForAutofill="no"
-                        android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Password"
+                                android:textColor="#333333"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/edit_text_background"
+                                android:hint="Secure password"
+                                android:textColorHint="#555555"
+                                android:textColor="#333333"
+                                android:inputType="textPassword"
+                                android:importantForAutofill="no"
+                                android:paddingHorizontal="12dp"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Confirm Password -->
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_confirm_password"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Confirm Password"
-                        android:textColor="#333333"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <EditText
-                        android:id="@+id/et_confirm_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
-                        android:hint="Re-enter password"
-                        android:inputType="textPassword"
-                        android:importantForAutofill="no"
-                        android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Confirm Password"
+                                android:textColor="#333333"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_confirm_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/edit_text_background"
+                                android:hint="Re-enter password"
+                                android:textColorHint="#555555"
+                                android:textColor="#333333"
+                                android:inputType="textPassword"
+                                android:importantForAutofill="no"
+                                android:paddingHorizontal="12dp"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -212,8 +253,9 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
                         android:hint="Juan Dela Cruz"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:inputType="textNoSuggestions"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
@@ -234,8 +276,9 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
                         android:hint="N00-00-000000"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
@@ -255,8 +298,9 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
                         android:hint="09XXXXXXXXX (11 digits)"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:inputType="phone"
                         android:importantForAutofill="no"
                         android:maxLength="11"
@@ -278,8 +322,9 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/edit_text_background"
-                        android:backgroundTint="@color/white"
                         android:hint="e.g., GT-001"
+                        android:textColorHint="#555555"
+                        android:textColor="#333333"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
@@ -314,7 +359,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Register as Driver"
-                                android:textColor="@color/white"
+                                android:textColor="@android:color/white"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
                         </LinearLayout>

@@ -99,10 +99,11 @@
                 android:layout_height="110dp"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
                 app:strokeWidth="0dp"
-                app:cardBackgroundColor="#F5F5F5">
+                app:cardBackgroundColor="#FFF8E1">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -111,7 +112,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@android:drawable/ic_menu_recent_history"
+                        android:src="@drawable/ic_time"
                         app:tint="#F9A825" />
                     <TextView
                         android:id="@+id/tvPendingCount"
@@ -139,10 +140,11 @@
                 android:layout_height="110dp"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
                 app:strokeWidth="0dp"
-                app:cardBackgroundColor="#F5F5F5">
+                app:cardBackgroundColor="#E3F2FD">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -179,10 +181,11 @@
                 android:layout_height="110dp"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
                 app:strokeWidth="0dp"
-                app:cardBackgroundColor="#F5F5F5">
+                app:cardBackgroundColor="#EDF9F0">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -191,7 +194,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@android:drawable/checkbox_on_background"
+                        android:src="@drawable/ic_check"
                         app:tint="#43A047" />
                     <TextView
                         android:id="@+id/tvResolvedCount"

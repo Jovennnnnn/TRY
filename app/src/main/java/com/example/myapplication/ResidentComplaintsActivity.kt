@@ -4,10 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.myapplication.models.ApiResponse
 import com.example.myapplication.models.Complaint
 import com.example.myapplication.models.ComplaintsResponse
 import com.example.myapplication.network.RetrofitClient
@@ -28,7 +36,14 @@ class ResidentComplaintsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_resident_complaints)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.resident_complaints_root)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         sessionManager = SessionManager(this)
         complaintsContainer = findViewById(R.id.complaints_container)
@@ -42,7 +57,7 @@ class ResidentComplaintsActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.btn_new_complaint).setOnClickListener {
-            startActivity(Intent(this, FileComplaintActivity::class.java))
+            showNewComplaintDialog()
         }
 
         setupBottomNavigation()
@@ -52,6 +67,62 @@ class ResidentComplaintsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         fetchMyComplaints()
+    }
+
+    private fun showNewComplaintDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_file_complaint, null)
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+        builder.setView(dialogView)
+        
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val spinnerCategory = dialogView.findViewById<Spinner>(R.id.spinner_category)
+        val etDescription = dialogView.findViewById<EditText>(R.id.et_description)
+        val btnSubmit = dialogView.findViewById<View>(R.id.btn_submit)
+        val btnClose = dialogView.findViewById<View>(R.id.btn_close)
+
+        val categories = arrayOf("Uncollected Garbage", "Spilled Waste", "Driver Behavior", "Schedule Issue", "Other")
+        val adapter = ArrayAdapter(this, R.layout.spinner_item, categories)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinnerCategory.adapter = adapter
+
+        btnClose.setOnClickListener { dialog.dismiss() }
+
+        btnSubmit.setOnClickListener {
+            val category = spinnerCategory.selectedItem.toString()
+            val description = etDescription.text.toString().trim()
+
+            if (description.isEmpty()) {
+                etDescription.error = "Please enter description"
+                return@setOnClickListener
+            }
+
+            submitComplaint(category, description, dialog)
+        }
+
+        dialog.show()
+    }
+
+    private fun submitComplaint(category: String, description: String, dialog: AlertDialog) {
+        val userId = sessionManager.getUser()?.userId ?: return
+        
+        RetrofitClient.instance.fileComplaint(userId.toString(), category, description)
+            .enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                    if (response.isSuccessful && response.body()?.success == true) {
+                        Toast.makeText(this@ResidentComplaintsActivity, "Complaint submitted successfully", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                        fetchMyComplaints()
+                    } else {
+                        Toast.makeText(this@ResidentComplaintsActivity, "Failed to submit complaint", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    Toast.makeText(this@ResidentComplaintsActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun fetchMyComplaints() {
@@ -148,17 +219,20 @@ class ResidentComplaintsActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, ResidentDashboardActivity::class.java))
+                    overridePendingTransition(0, 0)
                     finish()
                     true
                 }
                 R.id.nav_track -> {
                     startActivity(Intent(this, TrackTrucksActivity::class.java))
+                    overridePendingTransition(0, 0)
                     finish()
                     true
                 }
                 R.id.nav_complaints -> true
                 R.id.nav_settings -> {
                     startActivity(Intent(this, ResidentSettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
                     finish()
                     true
                 }

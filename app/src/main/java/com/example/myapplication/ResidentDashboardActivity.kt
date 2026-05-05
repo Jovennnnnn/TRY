@@ -2,10 +2,15 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
@@ -18,7 +23,14 @@ class ResidentDashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_resident_dashboard)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.resident_dashboard_root)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         sessionManager = SessionManager(this)
         tvWelcome = findViewById(R.id.tvWelcome)
@@ -40,18 +52,27 @@ class ResidentDashboardActivity : AppCompatActivity() {
     }
 
     private fun showLogoutConfirmation() {
-        AlertDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Logout") { _, _ ->
-                sessionManager.logout()
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_logout_confirmation_resident, null)
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialogView.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btn_confirm_logout).setOnClickListener {
+            sessionManager.logout()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+
+        alertDialog.show()
     }
 
     private fun setupClickListeners() {
@@ -73,14 +94,20 @@ class ResidentDashboardActivity : AppCompatActivity() {
                 R.id.nav_home -> true
                 R.id.nav_track -> {
                     startActivity(Intent(this, TrackTrucksActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
                     true
                 }
                 R.id.nav_complaints -> {
                     startActivity(Intent(this, ResidentComplaintsActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
                     true
                 }
                 R.id.nav_settings -> {
                     startActivity(Intent(this, ResidentSettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
                     true
                 }
                 else -> false

@@ -23,12 +23,12 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="12dp"
-                android:src="@android:drawable/ic_menu_call"
+                android:src="@android:drawable/stat_notify_sync"
                 app:tint="#1B5E20" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact Support"
+                android:text="Data Management"
                 android:textColor="#1B5E20"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Reach out to us if you need help or have any inquiries."
+            android:text="Manage your personal data and local application storage."
             android:textColor="#757575"
             android:textSize="14sp" />
 
@@ -48,68 +48,117 @@
             android:layout_marginTop="24dp"
             android:orientation="vertical">
 
-            <!-- Phone Number -->
+            <!-- Export Data -->
             <LinearLayout
+                android:id="@+id/btn_export_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:paddingVertical="12dp">
+                android:paddingVertical="16dp">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_call"
+                    android:src="@android:drawable/stat_sys_download"
                     app:tint="#444444" />
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="+63 912 345 6789"
-                    android:textColor="#333333"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Export Personal Data"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Download a copy of your reports and profile"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F5F5F5" />
 
-            <!-- Email -->
+            <!-- Clear Cache -->
             <LinearLayout
+                android:id="@+id/btn_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:paddingVertical="12dp">
+                android:paddingVertical="16dp">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_dialog_email"
+                    android:src="@android:drawable/ic_menu_delete"
                     app:tint="#444444" />
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="support@asiagarbage.com"
-                    android:textColor="#333333"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clear Cache"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Free up space by removing temporary files"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F5F5F5" />
 
-            <!-- Office Address -->
+            <!-- Delete Account -->
             <LinearLayout
+                android:id="@+id/btn_delete_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:paddingVertical="12dp">
+                android:paddingVertical="16dp">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_dialog_map"
-                    app:tint="#444444" />
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="#D32F2F" />
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Barangay Hall, Purok 2, City Center"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delete Account"
+                        android:textColor="#D32F2F"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Permanently remove your account and data"
+                        android:textColor="#D32F2F"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

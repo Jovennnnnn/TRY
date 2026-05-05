@@ -2,7 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorSecondary">@color/secondary_blue</item>
+        <item name="colorTertiary">@color/teal_link</item>
+        <!-- Remove purple selection/highlighting -->
+        <item name="colorControlActivated">@color/primary_blue</item>
+        <item name="colorControlHighlight">@color/accent_blue</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
@@ -12,5 +17,10 @@
         <item name="android:width">64dp</item>
         <item name="android:height">40dp</item>
         <item name="marginHorizontal">12dp</item>
+    </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

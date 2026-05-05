@@ -82,7 +82,7 @@ class ResidentRegisterActivity : AppCompatActivity() {
     }
 
     private fun setupPurokSpinner() {
-        val puroks = arrayOf("Select Purok", "Purok 1", "Purok 2", "Purok 3", "Purok 4", "Purok 5", "Purok 6", "Purok 7")
+        val puroks = arrayOf("Choose Purok...", "Purok 1", "Purok 2", "Purok 3", "Purok 4", "Purok 5", "Purok 6", "Purok 7")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, puroks)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerPurok.adapter = adapter
@@ -126,7 +126,8 @@ class ResidentRegisterActivity : AppCompatActivity() {
         val passPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$".toRegex()
         etPassword.addValidationWatcher(
             validator = { it.matches(passPattern) },
-            errorMsg = "Password must be at least 8 characters with upper, lower, number, and symbol",
+            errorMsg = "",
+            showError = false,
             onValid = { 
                 tilPassword.error = null
                 if (etConfirmPassword.text?.isNotEmpty() == true) {
@@ -136,9 +137,6 @@ class ResidentRegisterActivity : AppCompatActivity() {
                 }
             },
             onInvalid = { 
-                if (etPassword.text?.isNotEmpty() == true) {
-                    tilPassword.error = "Password must be at least 8 characters with upper, lower, number, and symbol"
-                }
                 updateFieldState(etConfirmPassword, false) 
             }
         )
@@ -146,15 +144,13 @@ class ResidentRegisterActivity : AppCompatActivity() {
         // 4. Confirm Password
         etConfirmPassword.addValidationWatcher(
             validator = { it == etPassword.text.toString() && it.isNotEmpty() },
-            errorMsg = "Passwords do not match",
+            errorMsg = "",
+            showError = false,
             onValid = { 
                 tilConfirmPassword.error = null
                 updateFieldState(etFullName, true) 
             },
             onInvalid = { 
-                if (etConfirmPassword.text?.isNotEmpty() == true) {
-                    tilConfirmPassword.error = "Passwords do not match"
-                }
                 updateFieldState(etFullName, false) 
             }
         )
@@ -221,7 +217,6 @@ class ResidentRegisterActivity : AppCompatActivity() {
             tilConfirmPassword.error = null
             updateFieldState(etFullName, true)
         } else {
-            tilConfirmPassword.error = "Passwords do not match"
             updateFieldState(etFullName, false)
         }
     }
@@ -294,6 +289,7 @@ class ResidentRegisterActivity : AppCompatActivity() {
     private fun EditText.addValidationWatcher(
         validator: (String) -> Boolean,
         errorMsg: String,
+        showError: Boolean = true,
         onValid: () -> Unit,
         onInvalid: () -> Unit
     ) {
@@ -306,7 +302,7 @@ class ResidentRegisterActivity : AppCompatActivity() {
                     onValid()
                 } else {
                     onInvalid()
-                    if (input.isNotEmpty()) {
+                    if (input.isNotEmpty() && showError) {
                         validationRunnable = Runnable { 
                             this@addValidationWatcher.error = errorMsg
                         }

@@ -120,7 +120,8 @@
                         android:inputType="textNoSuggestions"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <!-- Email -->
                     <TextView
@@ -143,7 +144,8 @@
                         android:inputType="textEmailAddress"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <!-- Password -->
                     <TextView
@@ -162,12 +164,17 @@
                         app:hintEnabled="false"
                         app:endIconMode="password_toggle"
                         app:endIconTint="#757575"
+                        app:errorIconDrawable="@null"
+                        app:errorEnabled="false"
                         app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp">
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cursorColor="@color/black">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
+                            android:gravity="center_vertical"
                             android:background="@drawable/edit_text_background"
                             android:hint="Enter Password"
                             android:textColorHint="@color/input_hint_color"
@@ -175,7 +182,8 @@
                             android:inputType="textPassword"
                             android:importantForAutofill="no"
                             android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textCursorDrawable="@null" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Confirm Password -->
@@ -195,12 +203,17 @@
                         app:hintEnabled="false"
                         app:endIconMode="password_toggle"
                         app:endIconTint="#757575"
+                        app:errorIconDrawable="@null"
+                        app:errorEnabled="false"
                         app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp">
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cursorColor="@color/black">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_confirm_password"
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
+                            android:gravity="center_vertical"
                             android:background="@drawable/edit_text_background"
                             android:hint="Enter Confirm Password"
                             android:textColorHint="@color/input_hint_color"
@@ -208,7 +221,8 @@
                             android:inputType="textPassword"
                             android:importantForAutofill="no"
                             android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textCursorDrawable="@null" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <View
@@ -226,7 +240,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="8dp"
-                            android:src="@android:drawable/ic_menu_info_details"
+                            android:src="@drawable/ic_truck"
                             app:tint="@color/driver_icon" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -258,7 +272,8 @@
                         android:inputType="textNoSuggestions"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <!-- License Number -->
                     <TextView
@@ -280,7 +295,8 @@
                         android:textColor="@color/input_text_color"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <!-- Contact Number -->
                     <TextView
@@ -304,7 +320,8 @@
                         android:importantForAutofill="no"
                         android:maxLength="11"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <!-- Truck Assignment -->
                     <TextView
@@ -326,7 +343,8 @@
                         android:textColor="@color/input_text_color"
                         android:importantForAutofill="no"
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@null" />
 
                     <FrameLayout
                         android:id="@+id/btn_submit"

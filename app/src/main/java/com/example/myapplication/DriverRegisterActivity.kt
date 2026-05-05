@@ -113,7 +113,8 @@ class DriverRegisterActivity : AppCompatActivity() {
         val passPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$".toRegex()
         etPassword.addValidationWatcher(
             validator = { it.matches(passPattern) },
-            errorMsg = "Password must be at least 8 characters with upper, lower, number, and symbol",
+            errorMsg = "", // No error message for password
+            showError = false,
             onValid = { 
                 tilPassword.error = null
                 if (etConfirmPassword.text?.isNotEmpty() == true) {
@@ -123,9 +124,6 @@ class DriverRegisterActivity : AppCompatActivity() {
                 }
             },
             onInvalid = { 
-                if (etPassword.text?.isNotEmpty() == true) {
-                    tilPassword.error = "Password must be at least 8 characters with upper, lower, number, and symbol"
-                }
                 updateFieldState(etConfirmPassword, false) 
             }
         )
@@ -133,15 +131,13 @@ class DriverRegisterActivity : AppCompatActivity() {
         // 4. Confirm Password
         etConfirmPassword.addValidationWatcher(
             validator = { it == etPassword.text.toString() && it.isNotEmpty() },
-            errorMsg = "Passwords do not match",
+            errorMsg = "", // No error message
+            showError = false,
             onValid = { 
                 tilConfirmPassword.error = null
                 updateFieldState(etFullName, true) 
             },
             onInvalid = { 
-                if (etConfirmPassword.text?.isNotEmpty() == true) {
-                    tilConfirmPassword.error = "Passwords do not match"
-                }
                 updateFieldState(etFullName, false) 
             }
         )
@@ -240,7 +236,6 @@ class DriverRegisterActivity : AppCompatActivity() {
             tilConfirmPassword.error = null
             updateFieldState(etFullName, true)
         } else {
-            tilConfirmPassword.error = "Passwords do not match"
             updateFieldState(etFullName, false)
         }
     }
@@ -313,6 +308,7 @@ class DriverRegisterActivity : AppCompatActivity() {
     private fun EditText.addValidationWatcher(
         validator: (String) -> Boolean,
         errorMsg: String,
+        showError: Boolean = true,
         onValid: () -> Unit,
         onInvalid: () -> Unit
     ) {
@@ -326,7 +322,7 @@ class DriverRegisterActivity : AppCompatActivity() {
                     onValid()
                 } else {
                     onInvalid()
-                    if (input.isNotEmpty()) {
+                    if (input.isNotEmpty() && showError) {
                         validationRunnable = Runnable { 
                             this@addValidationWatcher.error = errorMsg
                         }
